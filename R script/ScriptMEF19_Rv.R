@@ -219,6 +219,38 @@ for (j in 392:392) {
 gc()# limpia de la memoria 
 rm(NombrePDF)
 
+setwd("C:/Users/Jose Luis/Documents/GitHub/DataSet-CAS-PERU/Data/MEF")
+
+list.dirs() # ver los diectorios
+list.files() # vemos todos los archivos de nuestra carpeta
+
+
+#Listamos los ficheros para leerlos y modificar
+Ficheros <- list.files(pattern = "\\.rds")
+
+#87 y 123
+# Ejemplo para leer y modificar individualmente
+
+CAS<-read_rds(Ficheros[95])
+# Vemos la estructura de la data para eliminar y Cambiar los nombres
+str(CAS)
+
+#Unimos la data de los Ficheros
+DATAB<-read_rds("DataMEF_350.rds")
+rm(DATAB)
+
+#length(Ficheros)
+
+for (j in 1:95) {
+  DATAB<-bind_rows(DATAB,readRDS(Ficheros[j]))
+}
+
+#DATAB<-DATAB[-1,]
+#Guardamos las data
+
+saveRDS(DATAB, "DataMEF_445.rds")
+
+
 #----PDFs de los resultados#----
 
 pdfResul2019<-Cas2019pdf_link%>%
